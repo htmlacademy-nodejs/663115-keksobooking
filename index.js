@@ -12,7 +12,7 @@ const messages = {
     --version — печатает версию приложения;`
 };
 
-if (process.argv.length == 2) {
+if (process.argv.length === 2) {
   console.log(messages['info']);
 
   process.exit(0);
