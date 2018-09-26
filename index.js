@@ -1,4 +1,4 @@
-const message = {
+const Message = {
   INFO: `
     Привет пользователь!
     Эта программа будет запускать сервер «Keksobooking».
@@ -18,22 +18,22 @@ const message = {
 };
 
 if (process.argv.length === 2) {
-  console.log(message.INFO);
+  console.log(Message.INFO);
 
   process.exit(0);
 
 } else if (process.argv.includes('--version')) {
-  console.log(message.VERSION);
+  console.log(Message.VERSION);
 
   process.exit(0);
 
 } else if (process.argv.includes('--help')) {
-  console.log(message.HELP);
+  console.log(Message.HELP);
 
   process.exit(0);
 
 } else {
-  console.error(message.error(process.argv[2]));
+  console.error(Message.error(process.argv[2]));
 
   process.exit(1);
 };
