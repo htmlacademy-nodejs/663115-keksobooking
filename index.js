@@ -9,13 +9,13 @@ const Message = {
   HELP: `
     Доступные команды:
     --help    — печатает этот текст;
-    --version — печатает версию приложения;`,
-
-  error: (command) => (`
-    Неизвестная команда ${command}.
-    Чтобы прочитать правила использования приложения, наберите "--help"
-  `)
+    --version — печатает версию приложения;`
 };
+
+const createErrorMessage = (command) => (`
+  Неизвестная команда ${command}.
+  Чтобы прочитать правила использования приложения, наберите "--help"
+`);
 
 if (process.argv.length === 2) {
   console.log(Message.INFO);
@@ -33,7 +33,7 @@ if (process.argv.length === 2) {
   process.exit(0);
 
 } else {
-  console.error(Message.error(process.argv[2]));
+  console.error(createErrorMessage(process.argv[2]));
 
   process.exit(1);
 };
