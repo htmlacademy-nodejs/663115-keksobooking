@@ -1,3 +1,5 @@
+'use strict';
+
 const Message = {
   INFO: `Привет пользователь!
 Эта программа будет запускать сервер «Keksobooking».
@@ -16,7 +18,7 @@ const createErrorMessage = (command) => (`Неизвестная команда 
 const params = {
   '--version': () => console.log(Message.VERSION),
   '--help': () => console.log(Message.HELP)
-}
+};
 
 if (process.argv.length === 2) {
   console.log(Message.INFO);
@@ -31,6 +33,7 @@ process.argv.slice(2).every((argument) => {
     console.error(createErrorMessage(argument));
     process.exit(1);
   }
-})
+  return true;
+});
 
 process.exit(0);
