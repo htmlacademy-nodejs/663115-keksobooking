@@ -1,0 +1,24 @@
+{
+  "name": "663115-keksobooking-node",
+  "version": "0.0.1",
+  "description": "Learning project for Node.js course",
+  "main": "index.js",
+  "scripts": {
+    "test:lint": "eslint .",
+    "test": "npm run test:lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitesmake/663115-keksobooking-node.git"
+  },
+  "author": "Alexander Grishchenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sitesmake/663115-keksobooking-node/issues"
+  },
+  "homepage": "https://github.com/sitesmake/663115-keksobooking-node#readme",
+  "devDependencies": {
+    "eslint": "5.6.0",
+    "eslint-config-htmlacademy": "0.5.2"
+  }
+}
