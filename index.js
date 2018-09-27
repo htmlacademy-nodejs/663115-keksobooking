@@ -1,21 +1,17 @@
 const Message = {
-  INFO: `
-    Привет пользователь!
-    Эта программа будет запускать сервер «Keksobooking».
-    Автор: Александр Грищенко.`,
+  INFO: `Привет пользователь!
+Эта программа будет запускать сервер «Keksobooking».
+Автор: Александр Грищенко.`,
 
   VERSION: `v0.0.1`,
 
-  HELP: `
-    Доступные команды:
-    --help    — печатает этот текст;
-    --version — печатает версию приложения;`
+  HELP: `Доступные команды:
+--help    — печатает этот текст;
+--version — печатает версию приложения;`
 };
 
-const createErrorMessage = (command) => (`
-  Неизвестная команда ${command}.
-  Чтобы прочитать правила использования приложения, наберите "--help"
-`);
+const createErrorMessage = (command) => (`Неизвестная команда ${command}.
+Чтобы прочитать правила использования приложения, наберите "--help"`);
 
 const params = {
   '--version': () => console.log(Message.VERSION),
@@ -27,9 +23,10 @@ if (process.argv.length === 2) {
   process.exit(0);
 }
 
-process.argv.slice(2).map((argument) => {
+process.argv.slice(2).every((argument) => {
   if (argument in params) {
     params[argument]();
+    return false;
   } else {
     console.error(createErrorMessage(argument));
     process.exit(1);
