@@ -4,7 +4,8 @@
   "description": "Learning project for Node.js course",
   "main": "index.js",
   "scripts": {
-    "test": "eslint ."
+    "test:lint": "eslint .",
+    "test": "npm run test:lint"
   },
   "repository": {
     "type": "git",
