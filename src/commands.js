@@ -1,18 +1,25 @@
 'use strict';
 
-const commandVersion = require(`./commands/version`);
+const commandAuthor = require(`./commands/author`);
+const commandDescription = require(`./commands/description`);
 const commandHelp = require(`./commands/help`);
+const commandLicense = require(`./commands/license`);
+const commandVersion = require(`./commands/version`);
+
 const createUnknownCommandMessage = require(`./create-unknown-command-message`);
 
 let commands = {
-  [commandVersion.name]: commandVersion,
-  [commandHelp.name]: commandHelp
+  [commandAuthor.name]: commandAuthor,
+  [commandDescription.name]: commandDescription,
+  [commandHelp.name]: commandHelp,
+  [commandLicense.name]: commandLicense,
+  [commandVersion.name]: commandVersion
 };
 
 const processCommands = function (args) {
   args.every((argument) => {
     if (argument in commands) {
-      commands[argument].execute();
+      commands[argument].execute(commands);
       return false;
     } else {
       console.error(createUnknownCommandMessage(argument, commands));
