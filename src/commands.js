@@ -8,7 +8,7 @@ const commandVersion = require(`./commands/version`);
 
 const createUnknownCommandMessage = require(`./create-unknown-command-message`);
 
-let commands = {
+const commands = {
   [commandAuthor.name]: commandAuthor,
   [commandDescription.name]: commandDescription,
   [commandHelp.name]: commandHelp,
@@ -16,7 +16,7 @@ let commands = {
   [commandVersion.name]: commandVersion
 };
 
-const processCommands = function (args) {
+const processCommands = (args) => {
   args.every((argument) => {
     if (argument in commands) {
       commands[argument].execute(commands);
