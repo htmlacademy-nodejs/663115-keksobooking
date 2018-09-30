@@ -1,6 +1,7 @@
 'use strict';
 
 require(`colors`);
+
 const Message = require(`../message`);
 
 const withColors = (version) => {
