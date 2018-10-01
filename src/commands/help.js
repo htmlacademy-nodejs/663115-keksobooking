@@ -1,5 +1,7 @@
 'use strict';
 
+require(`colors`);
+
 const Message = require(`../message`);
 
 module.exports = {
@@ -9,7 +11,7 @@ module.exports = {
     console.log(Message.HELP);
     for (let key in args) {
       if (args.hasOwnProperty(key)) {
-        console.log(key, args[key].description);
+        console.log(key.gray, args[key].description.green);
       }
     }
   }
