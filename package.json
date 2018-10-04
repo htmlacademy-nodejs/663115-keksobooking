@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:lint": "eslint .",
-    "test": "npm run test:lint"
+    "test:mocha": "mocha",
+    "test": "npm run test:lint && npm run test:mocha"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,8 @@
   "homepage": "https://github.com/sitesmake/663115-keksobooking-node#readme",
   "devDependencies": {
     "eslint": "5.6.0",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint-config-htmlacademy": "0.5.2",
+    "mocha": "5.2.0"
   },
   "dependencies": {
     "colors": "1.3.2"
