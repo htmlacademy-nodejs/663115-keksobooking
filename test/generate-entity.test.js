@@ -15,7 +15,7 @@ describe(`Entity`, () => {
   });
 
   it(`should generate a url for avatar`, () => {
-    expect(entity.author.avatar).to.have.string(`https:`); // TODO: add regex
+    expect(entity.author.avatar).to.match(/^https:\/\/robohash.org\/[a-z0-9]+$/);
   });
 
   it(`should generate a valid string for title`, () => {
@@ -50,7 +50,12 @@ describe(`Entity`, () => {
     expect([`12:00`, `13:00`, `14:00`]).to.include(entity.offer.checkout);
   });
 
-  it(`should generate features as unique elements`);
+  it(`should generate features from correct values`, () => {
+    const validFeatures = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
+    entity.offer.features.forEach((feature)=>{
+      expect(validFeatures).to.include(feature);
+    });
+  });
 
   it(`should generate description as empty string`, () => {
     expect(entity.offer.description).to.equal(``);
@@ -71,5 +76,9 @@ describe(`Entity`, () => {
     expect(entity.location.y).to.be.within(150, 500);
   });
 
-  it(`should generate date in valid format`);
+  it(`should generate date in valid range`, () => {
+    const TIME_NOW = Math.floor(new Date() / 1000);
+    const TIME_MIN = Math.floor(new Date() / 1000 - Math.random(7 * 24 * 60 * 60));
+    expect(entity.date).to.be.within(TIME_MIN, TIME_NOW);
+  });
 });

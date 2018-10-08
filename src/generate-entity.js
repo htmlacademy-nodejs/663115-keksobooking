@@ -8,6 +8,7 @@ const PRICE_MIN = 1000;
 const PRICE_MAX = 1000000;
 const ROOMS_MIN = 1;
 const ROOMS_MAX = 5;
+const RANGE_FOR_DATES = 7 * 24 * 60 * 60;
 
 const randomItem = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -77,6 +78,10 @@ const mockPhotos = () => {
   return randomSortArray([`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`]);
 };
 
+const mockDate = () => {
+  return Math.floor(new Date() / 1000 - Math.random(RANGE_FOR_DATES));
+};
+
 const generateEntity = () => {
   const locationX = randomInt(X_MIN, X_MAX);
   const locationY = randomInt(Y_MIN, Y_MAX);
@@ -101,7 +106,8 @@ const generateEntity = () => {
     location: {
       x: locationX,
       y: locationY
-    }
+    },
+    date: mockDate()
   };
 };
 
