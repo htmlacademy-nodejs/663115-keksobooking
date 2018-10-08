@@ -17,7 +17,7 @@ const Param = {
   CHECKOUT: [`12:00`, `13:00`, `14:00`],
   FEATURES: [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`],
   PHOTOS: [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`],
-  TIME_MIN_OFFSET: 7 * 24 * 60 * 60
+  TIME_MIN_OFFSET: 7 * 24 * 60 * 60 * 1000
 };
 
 
@@ -46,7 +46,7 @@ const generateEntity = () => {
       x: locationX,
       y: locationY
     },
-    date: Math.floor(new Date() / 1000 - Math.random(Param.TIME_MIN_OFFSET))
+    date: Math.floor((new Date() - Math.random(Param.TIME_MIN_OFFSET)) / 1000)
   };
 };
 
