@@ -30,23 +30,23 @@ const generateEntity = () => {
       avatar: mockAvatar()
     },
     offer: {
-      title: mockTitle(),
-      address: mockAddress(locationX, locationY),
-      price: mockPrice(Param.PRICE_MIN, Param.PRICE_MAX),
-      type: mockType(),
-      rooms: mockRooms(),
-      guests: mockGuests(),
-      checkin: mockCheckin(),
-      checkout: mockCheckout(),
-      features: mockFeatures(),
-      description: mockDescription(),
-      photos: mockPhotos()
+      title: random.item(Param.TITLE),
+      address: locationX + `, ` + locationY,
+      price: random.integer(Param.PRICE_MIN, Param.PRICE_MAX),
+      type: random.item(Param.TYPE),
+      rooms: random.integer(Param.ROOMS_MIN, Param.ROOMS_MAX),
+      guests: random.integer(Param.ROOMS_MIN, Param.ROOMS_MAX) * 2,
+      checkin: random.item(Param.CHECKIN),
+      checkout: random.item(Param.CHECKOUT),
+      features: featuresList(),
+      description: ``,
+      photos: random.sortArray(Param.PHOTOS),
     },
     location: {
       x: locationX,
       y: locationY
     },
-    date: mockDate()
+    date: Math.floor(new Date() / 1000 - Math.random(Param.TIME_MIN_OFFSET))
   };
 };
 
@@ -55,39 +55,7 @@ const mockAvatar = () => {
   return `https://robohash.org/${Math.random().toString(36).substring(2, 15)}`;
 };
 
-const mockTitle = () => {
-  return random.item(Param.TITLE);
-};
-
-const mockAddress = (x, y) => {
-  return x + `,` + y;
-};
-
-const mockPrice = (min, max) => {
-  return random.integer(min, max);
-};
-
-const mockType = () => {
-  return random.item(Param.TYPE);
-};
-
-const mockRooms = () => {
-  return random.integer(Param.ROOMS_MIN, Param.ROOMS_MAX);
-};
-
-const mockGuests = () => {
-  return random.integer(Param.ROOMS_MIN, Param.ROOMS_MAX) * 2;
-};
-
-const mockCheckin = () => {
-  return random.item(Param.CHECKIN);
-};
-
-const mockCheckout = () => {
-  return random.item(Param.CHECKOUT);
-};
-
-const mockFeatures = () => {
+const featuresList = () => {
   const featuresData = random.sortArray(Param.FEATURES);
   const featuresSize = random.integer(1, featuresData.length);
   let features = [];
@@ -95,18 +63,6 @@ const mockFeatures = () => {
     features.push(featuresData[i]);
   }
   return features;
-};
-
-const mockDescription = () => {
-  return ``;
-};
-
-const mockPhotos = () => {
-  return random.sortArray(Param.PHOTOS);
-};
-
-const mockDate = () => {
-  return Math.floor(new Date() / 1000 - Math.random(Param.TIME_MIN_OFFSET));
 };
 
 
