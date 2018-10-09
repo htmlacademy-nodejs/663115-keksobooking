@@ -6,7 +6,6 @@ const {generateEntity, Param} = require(`../src/generate-entity.js`);
 
 const expect = chai.expect;
 
-
 const entity = generateEntity();
 
 describe(`Entity`, () => {
@@ -30,8 +29,8 @@ describe(`Entity`, () => {
     expect(entity.offer.price).to.be.within(Param.PRICE_MIN, Param.PRICE_MAX);
   });
 
-  it(`should generate correct type`, () => {
-    expect([`flat`, `palace`, `house`, `bungalo`]).to.include(entity.offer.type);
+  it(`should generate type`, () => {
+    expect(Param.TYPE).to.include(entity.offer.type);
   });
 
   it(`should generate rooms in valid range`, () => {
@@ -76,8 +75,8 @@ describe(`Entity`, () => {
   });
 
   it(`should generate date in valid range`, () => {
-    const TIME_NOW = Math.floor(new Date());
-    const TIME_MIN = Math.floor(new Date() - Param.TIME_MIN_OFFSET);
-    expect(entity.date * 1000).to.be.within(TIME_MIN, TIME_NOW);
+    const timeNow = ~~new Date();
+    const timeMin = new Date() - Param.TIME_MIN_OFFSET;
+    expect(entity.date * 1000).to.be.within(timeMin, timeNow);
   });
 });

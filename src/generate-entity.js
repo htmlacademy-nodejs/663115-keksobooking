@@ -20,14 +20,13 @@ const Param = {
   TIME_MIN_OFFSET: 7 * 24 * 60 * 60 * 1000
 };
 
-
 const generateEntity = () => {
   const locationX = random.integer(Param.X_MIN, Param.X_MAX);
   const locationY = random.integer(Param.Y_MIN, Param.Y_MAX);
 
   return {
     author: {
-      avatar: mockAvatar()
+      avatar: createAvatar()
     },
     offer: {
       title: random.item(Param.TITLE),
@@ -38,7 +37,7 @@ const generateEntity = () => {
       guests: random.integer(Param.ROOMS_MIN, Param.ROOMS_MAX) * 2,
       checkin: random.item(Param.CHECKIN),
       checkout: random.item(Param.CHECKOUT),
-      features: featuresList(),
+      features: createFeaturesList(),
       description: ``,
       photos: random.sortArray(Param.PHOTOS),
     },
@@ -50,21 +49,19 @@ const generateEntity = () => {
   };
 };
 
-
-const mockAvatar = () => {
+const createAvatar = () => {
   return `https://robohash.org/${Math.random().toString(36).substring(2, 15)}`;
 };
 
-const featuresList = () => {
+const createFeaturesList = () => {
   const featuresData = random.sortArray(Param.FEATURES);
   const featuresSize = random.integer(1, featuresData.length);
-  let features = [];
+  const features = [];
   for (let i = 0; i < featuresSize; i++) {
     features.push(featuresData[i]);
   }
   return features;
 };
-
 
 module.exports = {
   Param,
