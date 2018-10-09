@@ -75,7 +75,7 @@ describe(`Entity`, () => {
   });
 
   it(`should generate date in valid range`, () => {
-    const timeNow = Math.floor(new Date());
+    const timeNow = new Date().getTime();
     const timeMin = new Date() - Param.TIME_MIN_OFFSET;
     expect(entity.date * 1000).to.be.within(timeMin, timeNow);
   });
