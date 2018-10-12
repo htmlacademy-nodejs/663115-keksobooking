@@ -2,7 +2,7 @@
 
 require(`colors`);
 
-const Message = require(`../message`);
+const {Message} = require(`../message`);
 
 const colorizeVersionString = (version) => {
   const versionParts = version.slice(1).split(`.`);

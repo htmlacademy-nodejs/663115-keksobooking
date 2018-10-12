@@ -1,5 +1,7 @@
 'use strict';
 
+require(`colors`);
+
 const Message = {
   AUTHOR: `Александр Грищенко`,
   DESCRIPTION: `Привет пользователь!
@@ -10,4 +12,10 @@ const Message = {
   VERSION: `v0.0.1`
 };
 
-module.exports = Message;
+const createUnknownCommandMessage = (command, supportedCommands) => (`Неизвестная команда ${command}.
+Укажите одну из поддерживаемых команд: ${Object.keys(supportedCommands).map((i) => supportedCommands[i][`name`])}`.red);
+
+module.exports = {
+  Message,
+  createUnknownCommandMessage
+};

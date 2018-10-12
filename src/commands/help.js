@@ -2,7 +2,7 @@
 
 require(`colors`);
 
-const Message = require(`../message`);
+const {Message} = require(`../message`);
 
 module.exports = {
   name: `--help`,
