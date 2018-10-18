@@ -16,20 +16,6 @@ const askQuestion = (question) => {
   });
 };
 
-
-const interfaceFrontend = (questions) => {
-  return new Promise((resolve) => {
-    const answers = [];
-
-    askQuestion(questions[0]).then((answer)=>{
-      answers.push(answer);
-      return askQuestion(questions[1]);
-    }).then((answer)=>{
-      answers.push(answer);
-      console.log(answers);
-      resolve(answers);
-    });
-  });
+module.exports = {
+  askQuestion
 };
-
-module.exports = interfaceFrontend;

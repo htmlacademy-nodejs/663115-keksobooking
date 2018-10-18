@@ -1,21 +1,17 @@
 'use strict';
 
 const {generateEntity} = require(`../generate-entity.js`);
-const {fileExist, writeFile} = require(`../interface-backend.js`);
+const {writeFile} = require(`../interface-backend.js`);
 
 const generate = (count, path) => {
-  if (fileExist(path)) {
-    return Promise.reject(`File is exist`);
-  } else {
+  return new Promise((resolve) => {
     const elements = [];
     for (let i = 0; i < count; i++) {
       elements.push(generateEntity());
     }
 
-    writeFile(path, elements);
-
-    return Promise.resolve(elements);
-  }
+    resolve(writeFile(path, elements));
+  });
 };
 
 module.exports = {
