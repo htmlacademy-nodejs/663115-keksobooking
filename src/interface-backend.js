@@ -43,10 +43,3 @@ module.exports = {
   checkFileExist,
   writeFile
 };
-
-//
-//
-// promisifiedFn(fs.stat, '/file.json')
-//   .then((stats) => {
-//     return true;
-//   })
