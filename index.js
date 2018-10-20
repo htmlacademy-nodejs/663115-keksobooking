@@ -37,7 +37,8 @@ if (process.argv.length === 2) {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
+      process.exit(1);
     });
 
 } else {
