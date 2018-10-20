@@ -25,15 +25,16 @@ if (process.argv.length === 2) {
     })
     .then((fileExist) => {
       if (fileExist) {
-        const rewrite = askQuestion(`Перезаписать? `);
-        if (!rewrite) {
-          return false;
-        }
+        askQuestion(`Перезаписать? (y) `)
+          .then((answer) => {
+            if (answer === `y`) {
+              return commandGenerate.execute(count, path);
+            } else {
+              console.log(`Файл с данными не был создан!`);
+            }
+            return true;
+          });
       }
-      return commandGenerate.execute(count, path);
-    })
-    .then(() => {
-      console.log(`Файл с данными успешно создан!`);
     })
     .catch((error) => {
       console.log(error);

@@ -8,8 +8,9 @@ const askQuestion = (question) => {
       input: process.stdin,
       output: process.stdout
     });
-
+    console.log(`before rl question`);
     rl.question(question, (answer) => {
+      console.log(`inside rl question`);
       rl.close();
       resolve(answer);
     });
