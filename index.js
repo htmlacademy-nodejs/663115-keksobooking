@@ -25,7 +25,7 @@ if (process.argv.length === 2) {
     })
     .then((fileExist) => {
       if (fileExist) {
-        askQuestion(`Перезаписать? (y) `)
+        askQuestion(`Перезаписать? (y)`)
           .then((answer) => {
             if (answer === `y`) {
               return commandGenerate.execute(count, path);
