@@ -3,7 +3,6 @@
 const fs = require(`fs`);
 
 const promisifiedFn = (callback, ...args) => {
-  console.log(`promisedFn`);
   return new Promise((resolve, reject) => {
     callback(...args, (err, arg) => {
       if (err) {
@@ -29,12 +28,10 @@ const checkFileExist = (path) => {
 };
 
 const writeFile = (path, elements) => {
-  console.log(`writeFile`);
   return new Promise((resolve, reject) => {
     const fileWriteOptions = {encoding: `utf-8`, mode: 0o644};
     promisifiedFn(fs.writeFile, path, JSON.stringify(elements), fileWriteOptions)
       .then(() => {
-        console.log(`Файл с данными успешно создан!`);
         resolve();
       })
       .catch((err) => {
