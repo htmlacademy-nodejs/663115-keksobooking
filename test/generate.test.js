@@ -2,7 +2,7 @@
 
 const assert = require(`assert`);
 const fs = require(`fs`);
-const {generate} = require(`../src/commands/generate`);
+const generateCommand = require(`../src/commands/generate`);
 
 const checkAndDelete = (file, cb) => {
   fs.access(file, (accessorError) => {
@@ -20,11 +20,22 @@ const checkAndDelete = (file, cb) => {
   });
 };
 
+const readFile = (path) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, `utf8`, (error, data) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(JSON.parse(data));
+    });
+  });
+};
+
 describe(`Generate JSON command`, function () {
   it(`should fail on non existing folder`, function (done) {
     const entitiesCount = 1;
     const tempFileName = `${__dirname}/folder/testfile.json`;
-    generate(entitiesCount, tempFileName)
+    generateCommand.execute(entitiesCount, tempFileName)
       .then(() => assert.fail(`Path ${tempFileName} should not be available`))
       .catch(() => done());
   });
@@ -32,9 +43,31 @@ describe(`Generate JSON command`, function () {
   it(`should create new file`, function (done) {
     const entitiesCount = 1;
     const tempFileName = `${__dirname}/testfile.json`;
-    generate(entitiesCount, tempFileName)
+    generateCommand.execute(entitiesCount, tempFileName)
       .then(() => {
         return checkAndDelete(tempFileName, done);
+      })
+      .catch((error) => assert.fail(error));
+  });
+
+  it(`should rewrite file`, function (done) {
+    const entitiesCount = 1;
+    const tempFileName = `${__dirname}/testfile.json`;
+    let firstContents = ``;
+    generateCommand.execute(entitiesCount, tempFileName)
+      .then(() => {
+        return readFile(tempFileName);
+      })
+      .then((data) => {
+        firstContents = data;
+        return generateCommand.execute(entitiesCount, tempFileName);
+      }).then(() => {
+        return readFile(tempFileName);
+      }).then((data) => {
+        if (firstContents[0].offer.title === data[0].offer.title) {
+          assert.fail(`data is equal`);
+        }
+        return done();
       })
       .catch((error) => assert.fail(error));
   });

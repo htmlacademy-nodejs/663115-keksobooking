@@ -19,7 +19,6 @@ module.exports = {
   name: `--generate`,
   description: `Генерирует данные в файл`,
   execute(count, path) {
-    generate(count, path);
-  },
-  generate
+    return generate(count, path);
+  }
 };
