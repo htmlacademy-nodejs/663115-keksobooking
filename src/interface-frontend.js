@@ -10,7 +10,6 @@ const askQuestion = (question) => {
     });
     console.log(`before rl question`);
     rl.question(question, (answer) => {
-      console.log(`inside rl question`);
       rl.close();
       resolve(answer);
     });

@@ -10,8 +10,9 @@ const generate = (count, path) => {
       elements.push(generateEntity());
     }
 
-    resolve(writeFile(path, elements)
-      .catch((err) => reject(err)));
+    writeFile(path, elements)
+      .then(resolve)
+      .catch((err) => reject(err));
   });
 };
 
