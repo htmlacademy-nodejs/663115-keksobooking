@@ -21,7 +21,7 @@ git pull academy master
 git push
 ```
 
-¹ В `academy` должна быть ссылка на репозиторий Академии. Если его там нет, добавьте:
+¹В `academy` должна быть ссылка на репозиторий Академии. Если его там нет, добавьте:
 
 ```
 git remote add academy git@github.com:htmlacademy-nodejs/663115-keksobooking.git
