@@ -15,8 +15,8 @@ const FileType = {
 };
 
 const handler = (req, res) => {
-  res.statusCode = 200;
   try {
+    res.statusCode = 200;
     const reqUrl = req.url === `` ? `/static/index.html` : req.url;
     const appRoot = process.env.PWD;
     const requestFilePath = appRoot + reqUrl;
@@ -30,9 +30,11 @@ const handler = (req, res) => {
         res.end(data);
       })
       .catch((err) => {
+        res.statusCode = 404;
         res.end(`404. ${err}`);
       });
   } catch (err) {
+    res.statusCode = 500;
     res.end(`500. ${err}`);
   }
 };
