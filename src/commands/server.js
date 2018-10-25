@@ -17,9 +17,11 @@ const FileType = {
 
 const handler = (req, res) => {
   res.statusCode = 200;
-  const reqUrl = req.url === `/` ? `/index.html` : req.url;
+
   const appRoot = process.env.PWD;
+  const reqUrl = req.url === `/` ? `/index.html` : req.url;
   const requestFilePath = appRoot + `/static` + reqUrl;
+
   let fileType;
   if (Object.values(FileType).indexOf(path.extname(requestFilePath)) > -1) {
     res.statusCode = 500;
@@ -27,8 +29,9 @@ const handler = (req, res) => {
   } else {
     fileType = FileType[path.extname(requestFilePath)];
   }
-  const encoding = fileType.includes(`image/`) ? `binary` : `utf-8`;
   res.setHeader(`Content-Type`, fileType);
+
+  const encoding = fileType.includes(`image/`) ? `binary` : `utf-8`;
   readFile(requestFilePath, encoding)
     .then((data) => {
       res.end(data, encoding);
