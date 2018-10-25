@@ -4,8 +4,9 @@ const http = require(`http`);
 const path = require(`path`);
 const {readFile} = require(`../interface-backend`);
 
-const hostname = `127.0.0.1`;
-const defaultPort = 3000;
+const HOSTNAME = `127.0.0.1`;
+const DEFAULT_PORT = 3000;
+
 const FileType = {
   '.css': `text/css`,
   '.html': `text/html; charset=UTF-8`,
@@ -15,41 +16,39 @@ const FileType = {
 };
 
 const handler = (req, res) => {
-  try {
-    res.statusCode = 200;
-    const reqUrl = req.url === `/` ? `/index.html` : req.url;
-    const appRoot = process.env.PWD;
-    const requestFilePath = appRoot + `/static` + reqUrl;
-    const fileType = FileType[path.extname(requestFilePath)];
-    const encoding = fileType.substr(0, 5) === `image` ? `base64` : `utf-8`;
-    res.setHeader(`Content-Type`, fileType);
-    readFile(requestFilePath, encoding)
-      .then((data) => {
-        res.end(data, encoding);
-      })
-      .catch((err) => {
-        res.statusCode = 404;
-        res.end(`404. ${err}`);
-      });
-  } catch (err) {
+  res.statusCode = 200;
+  const reqUrl = req.url === `/` ? `/index.html` : req.url;
+  const appRoot = process.env.PWD;
+  const requestFilePath = appRoot + `/static` + reqUrl;
+  let fileType;
+  if (Object.values(FileType).indexOf(path.extname(requestFilePath)) > -1) {
     res.statusCode = 500;
-    res.end(`500. ${err}`);
+    res.end(`500. Format ${path.extname(requestFilePath)} is not supported`);
+  } else {
+    fileType = FileType[path.extname(requestFilePath)];
   }
+  const encoding = fileType.includes(`image/`) ? `binary` : `utf-8`;
+  res.setHeader(`Content-Type`, fileType);
+  readFile(requestFilePath, encoding)
+    .then((data) => {
+      res.end(data, encoding);
+    })
+    .catch((err) => {
+      res.statusCode = 404;
+      res.end(`404. ${err}`);
+    });
 };
 
 module.exports = {
   name: `--server`,
-  description: `Запускает сервер. Принимает параметр номер порта. Если не задано, сервер запускается на порту ${defaultPort}.`,
+  description: `Запускает сервер. Принимает параметр номер порта. Если не задано, сервер запускается на порту ${DEFAULT_PORT}.`,
   execute() {
     const server = http.createServer();
     server.on(`request`, handler);
 
-    let port = defaultPort;
-    if (process.argv[3]) {
-      port = process.argv[3];
-    }
+    let port = process.argv[3] || DEFAULT_PORT;
 
-    server.listen(port, hostname, (err) => {
+    server.listen(port, HOSTNAME, (err) => {
       if (err) {
         console.error(err);
       }
