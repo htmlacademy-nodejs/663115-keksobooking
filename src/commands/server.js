@@ -5,7 +5,7 @@ const path = require(`path`);
 const {readFile} = require(`../interface-backend`);
 
 const hostname = `127.0.0.1`;
-const port = 5000;
+const port = 3000;
 const FileType = {
   '.css': `text/css`,
   '.html': `text/html; charset=UTF-8`,
