@@ -5,7 +5,7 @@ const path = require(`path`);
 const {readFile} = require(`../interface-backend`);
 
 const hostname = `127.0.0.1`;
-const port = 3000;
+const defaultPort = 3000;
 const FileType = {
   '.css': `text/css`,
   '.html': `text/html; charset=UTF-8`,
@@ -20,14 +20,12 @@ const handler = (req, res) => {
     const reqUrl = req.url === `/` ? `/index.html` : req.url;
     const appRoot = process.env.PWD;
     const requestFilePath = appRoot + `/static` + reqUrl;
-    console.log(`---start--`);
-    console.log(requestFilePath);
-    console.log(path.extname(requestFilePath));
-    console.log(`---end--`);
-    res.setHeader(`Content-Type`, FileType[path.extname(requestFilePath)]);
-    readFile(requestFilePath)
+    const fileType = FileType[path.extname(requestFilePath)];
+    const encoding = fileType.substr(0, 5) === `image` ? `base64` : `utf-8`;
+    res.setHeader(`Content-Type`, fileType);
+    readFile(requestFilePath, encoding)
       .then((data) => {
-        res.end(data);
+        res.end(data, encoding);
       })
       .catch((err) => {
         res.statusCode = 404;
@@ -41,17 +39,22 @@ const handler = (req, res) => {
 
 module.exports = {
   name: `--server`,
-  description: `Запускает сервер`,
+  description: `Запускает сервер. Принимает параметр номер порта. Если не задано, сервер запускается на порту ${defaultPort}.`,
   execute() {
     const server = http.createServer();
     server.on(`request`, handler);
+
+    let port = defaultPort;
+    if (process.argv[3]) {
+      port = process.argv[3];
+    }
 
     server.listen(port, hostname, (err) => {
       if (err) {
         console.error(err);
       }
 
-      console.log(`server is running`);
+      console.log(`server is running on port ${port}`);
     });
   }
 };

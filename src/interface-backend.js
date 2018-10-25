@@ -40,9 +40,9 @@ const writeFile = (path, elements) => {
   });
 };
 
-const readFile = (path) => {
+const readFile = (path, encoding = `utf-8`) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, `utf8`, (error, data) => {
+    fs.readFile(path, encoding, (error, data) => {
       if (error) {
         return reject(error);
       }
