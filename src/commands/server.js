@@ -5,7 +5,7 @@ const path = require(`path`);
 const {readFile} = require(`../interface-backend`);
 
 const hostname = `127.0.0.1`;
-const port = 3000;
+const port = 5000;
 const FileType = {
   '.css': `text/css`,
   '.html': `text/html; charset=UTF-8`,
@@ -16,15 +16,25 @@ const FileType = {
 
 const handler = (req, res) => {
   res.statusCode = 200;
-  const appRoot = process.env.PWD;
-  const requestFilePath = appRoot + req.url;
-  console.log(`-----`);
-  console.log(requestFilePath);
-  res.setHeader(`Content-Type`, FileType[path.extname(requestFilePath)]);
-  readFile(requestFilePath)
-    .then((data) => {
-      res.end(data);
-    });
+  try {
+    const reqUrl = req.url === `` ? `/static/index.html` : req.url;
+    const appRoot = process.env.PWD;
+    const requestFilePath = appRoot + reqUrl;
+    console.log(`---start--`);
+    console.log(requestFilePath);
+    console.log(path.extname(requestFilePath));
+    console.log(`---end--`);
+    res.setHeader(`Content-Type`, FileType[path.extname(requestFilePath)]);
+    readFile(requestFilePath)
+      .then((data) => {
+        res.end(data);
+      })
+      .catch((err) => {
+        res.end(`404. ${err}`);
+      });
+  } catch (err) {
+    res.end(`500. ${err}`);
+  }
 };
 
 module.exports = {
