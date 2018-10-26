@@ -1,5 +1,6 @@
 'use strict';
 
+
 const commandGenerate = require(`./src/commands/generate`);
 const processCommands = require(`./src/commands`);
 const {askQuestion} = require(`./src/interface-frontend`);
@@ -12,7 +13,7 @@ if (process.argv.length === 2) {
   ];
 
   let count = 0;
-  let path = ``;
+  let dataFilePath = ``;
 
   askQuestion(questions[0])
     .then((answer) => {
@@ -20,15 +21,15 @@ if (process.argv.length === 2) {
       return askQuestion(questions[1]);
     })
     .then((answer) => {
-      path = answer;
-      return checkFileExist(path);
+      dataFilePath = answer;
+      return checkFileExist(dataFilePath);
     })
     .then((fileExist) => {
       if (fileExist) {
         askQuestion(`Перезаписать? (y)`)
           .then((answer) => {
             if (answer === `y`) {
-              return commandGenerate.execute(count, path);
+              return commandGenerate.execute(count, dataFilePath);
             } else {
               console.log(`Файл с данными не был создан!`);
             }

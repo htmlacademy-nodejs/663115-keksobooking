@@ -40,7 +40,19 @@ const writeFile = (path, elements) => {
   });
 };
 
+const readFile = (path, encoding = `utf-8`) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, encoding, (error, data) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(data);
+    });
+  });
+};
+
 module.exports = {
   checkFileExist,
-  writeFile
+  writeFile,
+  readFile
 };

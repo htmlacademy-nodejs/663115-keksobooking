@@ -4,6 +4,7 @@ const commandAuthor = require(`./commands/author`);
 const commandDescription = require(`./commands/description`);
 const commandHelp = require(`./commands/help`);
 const commandLicense = require(`./commands/license`);
+const commandServer = require(`./commands/server`);
 const commandVersion = require(`./commands/version`);
 
 const {createUnknownCommandMessage} = require(`./message`);
@@ -13,6 +14,7 @@ const commands = {
   [commandDescription.name]: commandDescription,
   [commandHelp.name]: commandHelp,
   [commandLicense.name]: commandLicense,
+  [commandServer.name]: commandServer,
   [commandVersion.name]: commandVersion
 };
 
