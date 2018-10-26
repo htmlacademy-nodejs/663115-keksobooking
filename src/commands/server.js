@@ -31,7 +31,7 @@ const handler = (req, res) => {
   }
   res.setHeader(`Content-Type`, fileType);
 
-  const encoding = fileType.includes(`image/`) ? `binary` : `utf-8`;
+  const encoding = fileType.includes(`text/`) ? `utf-8` : `binary`;
   readFile(requestFilePath, encoding)
     .then((data) => {
       res.end(data, encoding);
