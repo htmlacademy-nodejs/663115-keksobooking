@@ -26,14 +26,14 @@ const handler = (req, res) => {
   if (Object.values(FileType).indexOf(path.extname(requestFilePath)) > -1) {
     res.statusCode = 500;
     res.end(`500. Format ${path.extname(requestFilePath)} is not supported`);
-    return false;
+    return Promise.resolve();
   } else {
     fileType = FileType[path.extname(requestFilePath)];
   }
   res.setHeader(`Content-Type`, fileType);
 
   const encoding = fileType.includes(`text/`) ? `utf-8` : `binary`;
-  readFile(requestFilePath, encoding)
+  return readFile(requestFilePath, encoding)
     .then((data) => {
       return res.end(data, encoding);
     })
@@ -41,8 +41,6 @@ const handler = (req, res) => {
       res.statusCode = 404;
       res.end(`404. ${err}`);
     });
-
-  return true;
 };
 
 module.exports = {
