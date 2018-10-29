@@ -28,4 +28,20 @@ describe(`GET /api/offers`, () => {
       .expect(404)
       .expect(`Content-Type`, /html/);
   });
+
+  it(`respond with offer in custom date`, () => {
+    const date = 12345;
+    return request(app)
+      .get(`/api/offers/${date}`)
+      .set(`Accept`, `application/json`)
+      .expect(200)
+      .expect(`Content-Type`, /json/)
+      .then((response) => {
+        const offers = response.body;
+        assert.equal(offers.date, date);
+      })
+      .catch((error) => {
+        assert.fail(error);
+      });
+  });
 });

@@ -8,10 +8,10 @@ const DEFAULT_PORT = 3000;
 
 app.use(express.static(`static`));
 
-const generateOffers = (count = 1) => {
+const generateOffers = (date = null, count = 1) => {
   const elements = [];
   for (let i = 0; i < count; i++) {
-    elements.push(generateEntity());
+    elements.push(generateEntity(date));
   }
   return elements;
 };
@@ -37,12 +37,12 @@ class IllegalArgumentError extends Error {
 }
 
 app.get(`/api/offers/:date`, (req, res) => {
-  const offers = generateOffers(100);
-
   const date = req.params.date;
   if (!date) {
     throw new IllegalArgumentError(`No date specified in request`);
   }
+
+  const offers = generateOffers(date);
 
   const offer = offers.find((item) => item.date >= date);
   if (!offer) {

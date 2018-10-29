@@ -3,11 +3,11 @@
 const {generateEntity} = require(`../generate-entity.js`);
 const {writeFile} = require(`../interface-backend.js`);
 
-const generate = (count, path) => {
+const generate = (count, path, customDate) => {
   return new Promise((resolve, reject) => {
     const elements = [];
     for (let i = 0; i < count; i++) {
-      elements.push(generateEntity());
+      elements.push(generateEntity(customDate));
     }
 
     writeFile(path, elements)
@@ -19,7 +19,7 @@ const generate = (count, path) => {
 module.exports = {
   name: `--generate`,
   description: `Генерирует данные в файл`,
-  execute(count, path) {
-    return generate(count, path);
+  execute(count, path, customDate = null) {
+    return generate(count, path, customDate);
   }
 };
