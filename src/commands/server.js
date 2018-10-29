@@ -63,6 +63,10 @@ const runServer = (port) => {
   app.listen(port, () => console.log(`Example app listening on port ${port}`));
 };
 
+process.on(`uncaughtException`, function (err) {
+  console.log(err);
+});
+
 module.exports = {
   name: `--server`,
   description: `Запускает сервер. Принимает параметр номер порта. Если не задано, сервер запускается на порту ${DEFAULT_PORT}.`,
