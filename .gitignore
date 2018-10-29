@@ -17,3 +17,5 @@ build/
 
 # Локальные файлы конфигураций
 .env
+
+test/testfile.json

@@ -22,6 +22,36 @@ app.get(`/api/offers`, (req, res) => {
   res.send(generateOffers());
 });
 
+class NotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.code = 404;
+  }
+}
+
+class IllegalArgumentError extends Error {
+  constructor(message) {
+    super(message);
+    this.code = 404;
+  }
+}
+
+app.get(`/api/offers/:date`, (req, res) => {
+  const offers = generateOffers(100);
+
+  const date = req.params.date;
+  if (!date) {
+    throw new IllegalArgumentError(`No date specified in request`);
+  }
+
+  const offer = offers.find((item) => item.date >= date);
+  if (!offer) {
+    throw new NotFoundError(`Not found properities with date ${date}`);
+  }
+
+  res.send(offer);
+});
+
 const runServer = (port) => {
   port = parseInt(port, 10);
   app.listen(port, () => console.log(`Example app listening on port ${port}`));
