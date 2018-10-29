@@ -6,7 +6,7 @@
   "scripts": {
     "test:lint": "eslint .",
     "test:mocha": "mocha",
-    "test": "npm run test:lint && npm run test:mocha"
+    "test": "npm run test:lint && find ./test -name '*.test.js' | xargs npm run test:mocha"
   },
   "repository": {
     "type": "git",
