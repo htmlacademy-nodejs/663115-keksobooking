@@ -6,6 +6,10 @@ const {generateEntity} = require(`../generate-entity.js`);
 
 const DEFAULT_PORT = 3000;
 
+const NOT_FOUND_HANDLER = (req, res) => {
+  res.status(404).send(`Page was not found`);
+};
+
 app.use(express.static(`static`));
 
 const generateOffers = (date = null, count = 1) => {
@@ -51,6 +55,8 @@ app.get(`/api/offers/:date`, (req, res) => {
 
   res.send(offer);
 });
+
+app.use(NOT_FOUND_HANDLER);
 
 const runServer = (port) => {
   port = parseInt(port, 10);
