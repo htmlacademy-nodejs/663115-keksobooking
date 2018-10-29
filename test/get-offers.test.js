@@ -23,7 +23,7 @@ describe(`GET /api/offers`, () => {
 
   it(`returns 404 when not found`, () => {
     return request(app)
-      .get(`not/a/real/path`)
+      .get(`not-real-path`)
       .set(`Accept`, `application/json`)
       .expect(404)
       .expect(`Content-Type`, /html/);
