@@ -12,7 +12,7 @@ const NOT_FOUND_HANDLER = (req, res) => {
 
 app.use(express.static(`static`));
 
-const generateOffers = (date = null, count = 1) => {
+const generateOffers = (date = undefined, count = 1) => {
   const elements = [];
   for (let i = 0; i < count; i++) {
     elements.push(generateEntity(date));
@@ -36,7 +36,7 @@ class NotFoundError extends Error {
 class IllegalArgumentError extends Error {
   constructor(message) {
     super(message);
-    this.code = 404;
+    this.code = 400;
   }
 }
 
@@ -62,10 +62,6 @@ const runServer = (port) => {
   port = parseInt(port, 10);
   app.listen(port, () => console.log(`Example app listening on port ${port}`));
 };
-
-process.on(`uncaughtException`, function (err) {
-  console.log(err);
-});
 
 module.exports = {
   name: `--server`,

@@ -1,7 +1,7 @@
 'use strict';
 
-const request = require(`supertest`);
 const assert = require(`assert`);
+const request = require(`supertest`);
 
 const app = require(`../src/commands/server`).app;
 
@@ -43,5 +43,13 @@ describe(`GET /api/offers`, () => {
       .catch((error) => {
         assert.fail(error);
       });
+  });
+
+  it(`returns 400 when no date specified`, () => {
+    return request(app)
+      .get(`/api/offers/`)
+      .set(`Accept`, `application/json`)
+      .expect(400)
+      .expect(`Content-Type`, /html/);
   });
 });

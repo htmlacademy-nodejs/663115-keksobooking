@@ -19,7 +19,7 @@ const generate = (count, path, customDate) => {
 module.exports = {
   name: `--generate`,
   description: `Генерирует данные в файл`,
-  execute(count, path, customDate = null) {
+  execute(count, path, customDate = undefined) {
     return generate(count, path, customDate);
   }
 };
