@@ -33,19 +33,8 @@ class NotFoundError extends Error {
   }
 }
 
-class IllegalArgumentError extends Error {
-  constructor(message) {
-    super(message);
-    this.code = 400;
-  }
-}
-
 app.get(`/api/offers/:date`, (req, res) => {
   const date = req.params.date;
-  if (!date) {
-    throw new IllegalArgumentError(`No date specified in request`);
-  }
-
   const offers = generateOffers(date);
 
   const offer = offers.find((item) => item.date >= date);
