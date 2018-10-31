@@ -1,11 +1,14 @@
 'use strict';
 
 const express = require(`express`);
+const multer = require(`multer`);
+
 const {generateEntity} = require(`../generate-entity.js`);
 const NotFoundError = require(`../errors/not-found-error`);
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
+const upload = multer({storage: multer.memoryStorage()});
 
 const generateOffers = (date, count = 1) => {
   const elements = [];
@@ -31,8 +34,12 @@ offersRouter.get(`/:date`, (req, res) => {
   res.send(offer);
 });
 
-offersRouter.post(`/`, jsonParser, (req, res) => {
+offersRouter.post(`/`, jsonParser, upload.single(`author[avatar]`), (req, res) => {
   const body = req.body;
+  const avatar = req.file;
+  if (avatar) {
+    body.author = {avatar: avatar.originalname};
+  }
   res.send(body);
 });
 
