@@ -1,8 +1,9 @@
 'use strict';
 
 const express = require(`express`);
+const offersRouter = require(`../offers/route`);
+
 const app = express();
-const {generateEntity} = require(`../generate-entity.js`);
 
 const DEFAULT_PORT = 3000;
 
@@ -12,38 +13,9 @@ const NOT_FOUND_HANDLER = (req, res) => {
 
 app.use(express.static(`static`));
 
-const generateOffers = (date = undefined, count = 1) => {
-  const elements = [];
-  for (let i = 0; i < count; i++) {
-    elements.push(generateEntity(date));
-  }
-  return elements;
-};
-
 app.get(`/`, (req, res) => res.send(`Hello World!`));
 
-app.get(`/api/offers`, (req, res) => {
-  res.send(generateOffers());
-});
-
-class NotFoundError extends Error {
-  constructor(message) {
-    super(message);
-    this.code = 404;
-  }
-}
-
-app.get(`/api/offers/:date`, (req, res) => {
-  const date = req.params.date;
-  const offers = generateOffers(date);
-
-  const offer = offers.find((item) => item.date >= date);
-  if (!offer) {
-    throw new NotFoundError(`Not found properities with date ${date}`);
-  }
-
-  res.send(offer);
-});
+app.use(`/api/offers`, offersRouter);
 
 app.use(NOT_FOUND_HANDLER);
 
