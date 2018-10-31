@@ -1,65 +1,63 @@
 'use strict';
 
-const http = require(`http`);
-const path = require(`path`);
-const {readFile} = require(`../interface-backend`);
+const express = require(`express`);
+const app = express();
+const {generateEntity} = require(`../generate-entity.js`);
 
-const HOSTNAME = `127.0.0.1`;
 const DEFAULT_PORT = 3000;
 
-const FileType = {
-  '.css': `text/css`,
-  '.html': `text/html; charset=UTF-8`,
-  '.jpg': `image/jpeg`,
-  '.ico': `image/x-icon`,
-  '.png': `image/png`
+const NOT_FOUND_HANDLER = (req, res) => {
+  res.status(404).send(`Page was not found`);
 };
 
-const handler = (req, res) => {
-  res.statusCode = 200;
+app.use(express.static(`static`));
 
-  const appRoot = process.env.PWD;
-  const reqUrl = req.url === `/` ? `/index.html` : req.url;
-  const requestFilePath = appRoot + `/static` + reqUrl;
-
-  let fileType;
-  if (Object.values(FileType).indexOf(path.extname(requestFilePath)) > -1) {
-    res.statusCode = 500;
-    res.end(`500. Format ${path.extname(requestFilePath)} is not supported`);
-    return false;
-  } else {
-    fileType = FileType[path.extname(requestFilePath)];
+const generateOffers = (date = undefined, count = 1) => {
+  const elements = [];
+  for (let i = 0; i < count; i++) {
+    elements.push(generateEntity(date));
   }
-  res.setHeader(`Content-Type`, fileType);
+  return elements;
+};
 
-  const encoding = fileType.includes(`text/`) ? `utf-8` : `binary`;
-  readFile(requestFilePath, encoding)
-    .then((data) => {
-      return res.end(data, encoding);
-    })
-    .catch((err) => {
-      res.statusCode = 404;
-      res.end(`404. ${err}`);
-    });
+app.get(`/`, (req, res) => res.send(`Hello World!`));
 
-  return true;
+app.get(`/api/offers`, (req, res) => {
+  res.send(generateOffers());
+});
+
+class NotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.code = 404;
+  }
+}
+
+app.get(`/api/offers/:date`, (req, res) => {
+  const date = req.params.date;
+  const offers = generateOffers(date);
+
+  const offer = offers.find((item) => item.date >= date);
+  if (!offer) {
+    throw new NotFoundError(`Not found properities with date ${date}`);
+  }
+
+  res.send(offer);
+});
+
+app.use(NOT_FOUND_HANDLER);
+
+const runServer = (port) => {
+  port = parseInt(port, 10);
+  app.listen(port, () => console.log(`Example app listening on port ${port}`));
 };
 
 module.exports = {
   name: `--server`,
   description: `Запускает сервер. Принимает параметр номер порта. Если не задано, сервер запускается на порту ${DEFAULT_PORT}.`,
   execute() {
-    const server = http.createServer();
-    server.on(`request`, handler);
-
     const port = process.argv[3] || DEFAULT_PORT;
-
-    server.listen(port, HOSTNAME, (err) => {
-      if (err) {
-        console.error(err);
-      }
-
-      console.log(`server is running on port ${port}`);
-    });
-  }
+    runServer(port);
+  },
+  app
 };

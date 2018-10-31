@@ -20,7 +20,7 @@ const Param = {
   TIME_MIN_OFFSET: 7 * 24 * 60 * 60 * 1000
 };
 
-const generateEntity = () => {
+const generateEntity = (customDate = undefined) => {
   const locationX = random.integer(Param.X_MIN, Param.X_MAX);
   const locationY = random.integer(Param.Y_MIN, Param.Y_MAX);
 
@@ -45,7 +45,7 @@ const generateEntity = () => {
       x: locationX,
       y: locationY
     },
-    date: Math.floor((new Date() - Math.random(Param.TIME_MIN_OFFSET)) / 1000)
+    date: parseInt(customDate, 10) || Math.floor((new Date() - Math.random(Param.TIME_MIN_OFFSET)) / 1000)
   };
 };
 

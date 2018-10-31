@@ -2,7 +2,7 @@
 
 const assert = require(`assert`);
 const fs = require(`fs`);
-const generateCommand = require(`../src/commands/generate`);
+const generateCommand = require(`../../src/commands/generate`);
 
 const checkAndDelete = (file, cb) => {
   fs.access(file, (accessorError) => {
@@ -42,7 +42,7 @@ describe(`Generate JSON command`, function () {
 
   it(`should create new file`, function (done) {
     const entitiesCount = 1;
-    const tempFileName = `${__dirname}/testfile.json`;
+    const tempFileName = `${__dirname}/../testfile.json`;
     generateCommand.execute(entitiesCount, tempFileName)
       .then(() => {
         return checkAndDelete(tempFileName, done);
@@ -52,7 +52,7 @@ describe(`Generate JSON command`, function () {
 
   it(`should rewrite file`, function (done) {
     const entitiesCount = 1;
-    const tempFileName = `${__dirname}/testfile.json`;
+    const tempFileName = `${__dirname}/../testfile.json`;
     let firstContents = ``;
     generateCommand.execute(entitiesCount, tempFileName)
       .then(() => {
