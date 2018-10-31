@@ -15,9 +15,6 @@ describe(`GET /api/offers`, () => {
       .then((response) => {
         const offers = response.body;
         assert.equal(offers.length, 1);
-      })
-      .catch((error) => {
-        assert.fail(error);
       });
   });
 
@@ -39,17 +36,6 @@ describe(`GET /api/offers`, () => {
       .then((response) => {
         const offers = response.body;
         assert.equal(offers.date, date);
-      })
-      .catch((error) => {
-        assert.fail(error);
       });
-  });
-
-  it(`returns 400 when no date specified`, () => {
-    return request(app)
-      .get(`/api/offers/`)
-      .set(`Accept`, `application/json`)
-      .expect(400)
-      .expect(`Content-Type`, /html/);
   });
 });
