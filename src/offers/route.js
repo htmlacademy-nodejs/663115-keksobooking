@@ -5,6 +5,7 @@ const {generateEntity} = require(`../generate-entity.js`);
 const NotFoundError = require(`../errors/not-found-error`);
 
 const offersRouter = new express.Router();
+const jsonParser = express.json();
 
 const generateOffers = (date, count = 1) => {
   const elements = [];
@@ -28,6 +29,11 @@ offersRouter.get(`/:date`, (req, res) => {
   }
 
   res.send(offer);
+});
+
+offersRouter.post(`/`, jsonParser, (req, res) => {
+  const body = req.body;
+  res.send(body);
 });
 
 module.exports = offersRouter;
