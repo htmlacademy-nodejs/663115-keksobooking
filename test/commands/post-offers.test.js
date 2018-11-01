@@ -3,7 +3,7 @@
 const assert = require(`assert`);
 const request = require(`supertest`);
 
-const app = require(`../src/commands/server`).app;
+const app = require(`../../src/commands/server`).app;
 
 describe(`POST /api/offers`, () => {
   it(`send offer as json`, () => {

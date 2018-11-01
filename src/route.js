@@ -3,8 +3,8 @@
 const express = require(`express`);
 const multer = require(`multer`);
 
-const {generateEntity} = require(`../generate-entity.js`);
-const NotFoundError = require(`../errors/not-found-error`);
+const {generateEntity} = require(`./generate-entity.js`);
+const NotFoundError = require(`./errors/not-found-error`);
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
