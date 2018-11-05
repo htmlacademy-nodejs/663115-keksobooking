@@ -74,4 +74,14 @@ describe(`POST /api/offers`, () => {
         assert.fail(error);
       });
   });
+
+  it(`returns 400 when error in params validation`, () => {
+    return request(app)
+      .post(`/api/offers`)
+      .field(Object.assign({}, testData, {"price": 0}))
+      .attach(`author[avatar]`, `test/fixtures/keks.jpg`)
+      .type(`form`)
+      .expect(400)
+      .expect(`Content-Type`, /html/);
+  });
 });

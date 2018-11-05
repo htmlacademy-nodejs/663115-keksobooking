@@ -42,9 +42,10 @@ offersRouter.post(`/`, jsonParser, upload.single(`author[avatar]`), (req, res) =
   }
   const errors = checkForErrors(req.body);
   if (errors.length > 0) {
-    throw new NotFoundError(`You have errors: ${errors}`);
+    // throw new NotFoundError(`You have errors: ${errors}`);
+    return res.status(400).send(`You have errors: ${errors}`);
   }
-  res.send(body);
+  return res.send(body);
 });
 
 module.exports = offersRouter;
