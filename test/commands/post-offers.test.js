@@ -61,11 +61,11 @@ describe(`POST /api/offers`, () => {
   it(`sends form data`, () => {
     return request(app)
       .post(`/api/offers`)
-      .send(testData)
-      // .attach(`author[avatar]`, `test/fixtures/keks.jpg`)
-      // .type(`form`)
+      .field(testData)
+      .attach(`author[avatar]`, `test/fixtures/keks.jpg`)
+      .type(`form`)
       // .set(`Content-Type`, `multipart/form-data`)
-      .set(`Accept`, `application/json`)
+      // .set(`Accept`, `application/json`)
       .expect(200)
       .expect(`Content-Type`, /json/)
       .then((response) => {
