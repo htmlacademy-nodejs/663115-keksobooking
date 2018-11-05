@@ -36,8 +36,6 @@ offersRouter.get(`/:date`, (req, res) => {
 });
 
 offersRouter.post(`/`, jsonParser, upload.single(`author[avatar]`), (req, res) => {
-  console.log(`++++++++++++`);
-  console.log(req.body);
   const {body, file: avatar} = req;
   if (avatar) {
     body.author = {avatar: avatar.originalname};

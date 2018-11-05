@@ -15,8 +15,8 @@ const testData = {
   "rooms": 1,
   "guests": 1,
   "checkin": `9:00`,
-  "checkout": `7:00`
-  // "features": [`elevator`, `conditioner`]
+  "checkout": `7:00`,
+  "features": `["elevator", "conditioner"]`
 };
 
 describe(`POST /api/offers`, () => {
@@ -64,14 +64,10 @@ describe(`POST /api/offers`, () => {
       .field(testData)
       .attach(`author[avatar]`, `test/fixtures/keks.jpg`)
       .type(`form`)
-      // .set(`Content-Type`, `multipart/form-data`)
-      // .set(`Accept`, `application/json`)
       .expect(200)
       .expect(`Content-Type`, /json/)
       .then((response) => {
         const offers = response.body;
-        console.log(`--------------------------`);
-        console.log(response.body);
         assert.equal(offers.name, testData.name);
       })
       .catch((error) => {

@@ -41,8 +41,6 @@ const matchingObject = {
 };
 
 const validate = (value, key) => {
-  console.log(`key----`);
-  console.log(key);
   const result = matchingObject[key](value);
   if (result) {
     return null;

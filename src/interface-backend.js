@@ -15,7 +15,6 @@ const promisifiedFn = (callback, ...args) => {
 };
 
 const checkFileExist = (path) => {
-  console.log(`checkFileExist`);
   return new Promise((resolve) => {
     promisifiedFn(fs.stat, path)
       .then(() => {
