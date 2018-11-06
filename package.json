@@ -7,7 +7,7 @@
     "test:lint": "eslint .",
     "test:mocha": "mocha",
     "test": "npm run test:lint && mocha ./test --recursive",
-    "test:debugger": "mocha --inspect-brk ./test --recursive"
+    "debug:test": "mocha --inspect-brk ./test --recursive"
   },
   "repository": {
     "type": "git",

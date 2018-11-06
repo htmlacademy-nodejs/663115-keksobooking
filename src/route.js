@@ -3,9 +3,9 @@
 const express = require(`express`);
 const multer = require(`multer`);
 
-const {generateEntity} = require(`./generate-entity.js`);
-const checkForErrors = require(`./offers-validator.js`);
 const NotFoundError = require(`./errors/not-found-error`);
+const checkForErrors = require(`./offers-validator.js`);
+const {generateEntity} = require(`./generate-entity.js`);
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
