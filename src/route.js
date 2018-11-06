@@ -3,8 +3,9 @@
 const express = require(`express`);
 const multer = require(`multer`);
 
-const {generateEntity} = require(`./generate-entity.js`);
 const NotFoundError = require(`./errors/not-found-error`);
+const checkForErrors = require(`./offers-validator.js`);
+const {generateEntity} = require(`./generate-entity.js`);
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
@@ -35,12 +36,16 @@ offersRouter.get(`/:date`, (req, res) => {
 });
 
 offersRouter.post(`/`, jsonParser, upload.single(`author[avatar]`), (req, res) => {
-  const body = req.body;
-  const avatar = req.file;
+  const {body, file: avatar} = req;
   if (avatar) {
     body.author = {avatar: avatar.originalname};
   }
-  res.send(body);
+  const errors = checkForErrors(req.body);
+  if (errors.length > 0) {
+    // throw new NotFoundError(`You have errors: ${errors}`);
+    return res.status(400).send(`You have errors: ${errors}`);
+  }
+  return res.send(body);
 });
 
 module.exports = offersRouter;
