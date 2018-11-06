@@ -3,19 +3,19 @@
 const {MongoClient} = require(`mongodb`);
 const {generateEntity} = require(`../generate-entity.js`);
 
-const count = 100;
-const url = `mongodb://localhost:27017`;
-
-let client;
+const ENTITIES_COUNT = 100;
+const MONGO_SERVER_URL = `mongodb://localhost:27017`;
 
 const generate = () => {
+  let client;
+
   return new Promise((resolve, reject) => {
     const elements = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < ENTITIES_COUNT; i++) {
       elements.push(generateEntity());
     }
 
-    MongoClient.connect(url)
+    MongoClient.connect(MONGO_SERVER_URL)
       .then((clientConnection) => {
         client = clientConnection;
         const db = client.db(`offers`);
@@ -27,7 +27,7 @@ const generate = () => {
         client.close();
         return resolve();
       })
-      .catch((err) => reject(err));
+      .catch(reject);
   });
 };
 
