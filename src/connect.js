@@ -5,17 +5,16 @@ const {MongoClient} = require(`mongodb`);
 const MONGO_SERVER_URL = `mongodb://localhost:27017`;
 
 const connectAndRead = async () => {
-  const client = await MongoClient.connect(MONGO_SERVER_URL);
+  const client = await MongoClient.connect(MONGO_SERVER_URL, {useNewUrlParser: true});
   const db = client.db(`offers`);
 
   const collection = await db.collection(`offers`)
     .find({})
     .toArray();
 
-  console.log(collection);
   client.close();
+
+  return collection;
 };
 
-connectAndRead().catch((e) => {
-  throw e;
-});
+module.exports = connectAndRead;

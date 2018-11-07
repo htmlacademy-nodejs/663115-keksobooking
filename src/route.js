@@ -4,28 +4,23 @@ const express = require(`express`);
 const multer = require(`multer`);
 
 const NotFoundError = require(`./errors/not-found-error`);
-const checkForErrors = require(`./offers-validator.js`);
-const {generateEntity} = require(`./generate-entity.js`);
+const checkForErrors = require(`./offers-validator`);
+const connectAndRead = require(`./connect`);
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
 const upload = multer({storage: multer.memoryStorage()});
 
-const generateOffers = (date, count = 1) => {
-  const elements = [];
-  for (let i = 0; i < count; i++) {
-    elements.push(generateEntity(date));
-  }
-  return elements;
-};
+offersRouter.get(`/`, async (req, res) => {
+  const offers = await connectAndRead();
 
-offersRouter.get(`/`, (req, res) => {
-  res.send(generateOffers());
+  res.send(offers);
 });
 
-offersRouter.get(`/:date`, (req, res) => {
+offersRouter.get(`/:date`, async (req, res) => {
   const date = req.params.date;
-  const offers = generateOffers(date);
+
+  const offers = await connectAndRead();
 
   const offer = offers.find((item) => item.date >= date);
   if (!offer) {
