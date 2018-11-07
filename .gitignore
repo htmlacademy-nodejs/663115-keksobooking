@@ -19,3 +19,4 @@ build/
 .env
 
 test/testfile.json
+data/

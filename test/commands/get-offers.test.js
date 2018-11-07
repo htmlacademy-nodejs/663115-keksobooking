@@ -14,7 +14,21 @@ describe(`GET /api/offers`, () => {
       .expect(`Content-Type`, /json/)
       .then((response) => {
         const offers = response.body;
-        assert.equal(offers.length, 1);
+        assert.equal(offers.total, 100);
+        assert.equal(offers.data.length, 10);
+      });
+  });
+
+  it(`applys params of request`, () => {
+    return request(app)
+      .get(`/api/offers?limit=5`)
+      .set(`Accept`, `application/json`)
+      .expect(200)
+      .expect(`Content-Type`, /json/)
+      .then((response) => {
+        const offers = response.body;
+        assert.equal(offers.total, 100);
+        assert.equal(offers.data.length, 5);
       });
   });
 
@@ -27,7 +41,7 @@ describe(`GET /api/offers`, () => {
   });
 
   it(`respond with offer in custom date`, () => {
-    const date = 12345;
+    const date = 1541519164;
     return request(app)
       .get(`/api/offers/${date}`)
       .set(`Accept`, `application/json`)

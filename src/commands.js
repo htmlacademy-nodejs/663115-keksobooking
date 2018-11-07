@@ -4,6 +4,7 @@ const commandAuthor = require(`./commands/author`);
 const commandDescription = require(`./commands/description`);
 const commandHelp = require(`./commands/help`);
 const commandLicense = require(`./commands/license`);
+const commandPopulate = require(`./commands/populate`);
 const commandServer = require(`./commands/server`);
 const commandVersion = require(`./commands/version`);
 
@@ -14,6 +15,7 @@ const commands = {
   [commandDescription.name]: commandDescription,
   [commandHelp.name]: commandHelp,
   [commandLicense.name]: commandLicense,
+  [commandPopulate.name]: commandPopulate,
   [commandServer.name]: commandServer,
   [commandVersion.name]: commandVersion
 };
