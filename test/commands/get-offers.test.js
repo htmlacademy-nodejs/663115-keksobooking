@@ -14,7 +14,9 @@ describe(`GET /api/offers`, () => {
       .expect(`Content-Type`, /json/)
       .then((response) => {
         const offers = response.body;
-        assert.equal(offers.length, 100);
+        console.log(offers);
+        assert.equal(offers.total, 100);
+        assert.equal(offers.data.length, 10);
       });
   });
 

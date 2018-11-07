@@ -6,6 +6,7 @@ const setupCollection = async () => {
   const dataBase = await db;
 
   const collection = dataBase.collection(`offers`);
+  // collection.createIndex({name: -1}, {unique: true});
   return collection;
 };
 
@@ -27,5 +28,5 @@ class OfferStore {
   }
 }
 
-module.exports = new OfferStore(setupCollection);
-// .catch((e) => console.error(`Failed to setup "offers" collection`, e));
+module.exports = new OfferStore(setupCollection()
+  .catch((e) => console.error(`Failed to setup "offers" collection`, e)));
