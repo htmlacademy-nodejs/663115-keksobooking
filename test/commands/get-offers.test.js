@@ -14,9 +14,21 @@ describe(`GET /api/offers`, () => {
       .expect(`Content-Type`, /json/)
       .then((response) => {
         const offers = response.body;
-        console.log(offers);
         assert.equal(offers.total, 100);
         assert.equal(offers.data.length, 10);
+      });
+  });
+
+  it(`applys params of request`, () => {
+    return request(app)
+      .get(`/api/offers?limit=5`)
+      .set(`Accept`, `application/json`)
+      .expect(200)
+      .expect(`Content-Type`, /json/)
+      .then((response) => {
+        const offers = response.body;
+        assert.equal(offers.total, 100);
+        assert.equal(offers.data.length, 5);
       });
   });
 
