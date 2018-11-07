@@ -3,19 +3,38 @@
 const express = require(`express`);
 const multer = require(`multer`);
 
-const NotFoundError = require(`./errors/not-found-error`);
-const checkForErrors = require(`./offers-validator`);
-const connectAndRead = require(`./connect`);
+const OfferStore = require(`./store`);
+const NotFoundError = require(`../errors/not-found-error`);
+const checkForErrors = require(`./validator`);
+const connectAndRead = require(`../connect`);
+
+const PAGE_DEFAULT_LIMIT = 10;
 
 const offersRouter = new express.Router();
 const jsonParser = express.json();
 const upload = multer({storage: multer.memoryStorage()});
 
-offersRouter.get(`/`, async (req, res) => {
-  const offers = await connectAndRead();
+const asyncMiddleware = (fn) => (req, res, next) => fn(req, res, next).catch(next);
 
-  res.send(offers);
-});
+const toPage = async (cursor, skip = 0, limit = PAGE_DEFAULT_LIMIT) => {
+  const packet = await cursor.skip(skip).limit(limit).toArray();
+
+  return {
+    data: packet,
+    skip,
+    limit,
+    total: await cursor.count()
+  };
+};
+
+offersRouter.get(`/`, asyncMiddleware(async (req, res) => {
+  const skip = parseInt(req.query.skip || 0, 10);
+  const limit = parseInt(req.query.limit || PAGE_DEFAULT_LIMIT, 10);
+  if (isNaN(skip) || isNaN(limit)) {
+    throw new NotFoundError(`Illegal argument error here`); // tmp
+  }
+  res.send(await toPage(await OfferStore.getAllOffers(), skip, limit));
+}));
 
 offersRouter.get(`/:date`, async (req, res) => {
   const date = req.params.date;
